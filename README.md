@@ -1,6 +1,6 @@
 # Google Maps Geocoder
 
-Google Maps Geocoder is a Python module that provides tools for geocoding addresses using the Google Maps Geocoding API. This library supports single and batch geocoding and includes utilities for cleaning and validating address data.
+Google Maps Geocoder is a Python module that provides tools for geocoding addresses using the Google Maps Geocoding API. This library supports single and batch geocoding and includes utilities for cleaning and validating address data.  This module allows the user to batch geocode as many addresses as they please.  JUst simply prepare your addresses in a csv and use it as an input for the module. 
 
 ---
 
