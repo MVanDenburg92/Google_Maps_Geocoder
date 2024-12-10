@@ -1,134 +1,102 @@
 # Google Maps Geocoder
 
-Google Maps Geocoder is a Python module for geocoding addresses using the Google Maps Geocoding API. It supports batch geocoding for DataFrame-based datasets and includes tools for cleaning, preprocessing, and enriching location data.
+Google Maps Geocoder is a Python module for working with the Google Maps Geocoding API. It provides tools for cleaning datasets, geocoding addresses, and appending geocode results to data.
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Repository Structure](#repository-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Initialization](#initialization)
+  - [Cleaning Data](#cleaning-data)
+  - [Geocoding Addresses](#geocoding-addresses)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Introduction
+
+Google Maps Geocoder is designed to streamline geocoding operations with Google Maps Geocoding API. It is especially useful for processing large datasets of addresses and ensuring geocode results are correctly formatted and appended.
 
 ## Features
 
-- Clean and preprocess location data for geocoding.
-- Geocode individual or bulk addresses with Google Maps API.
-- Append geocode results to DataFrames, including latitude, longitude, and other metadata.
-- Automatic handling of API rate limits.
+- Validate API key and test connection to Google Maps API.
+- Clean and preprocess data for geocoding.
+- Geocode addresses and append results to your dataset.
+- Handle API query limits with automatic retry logic.
+
+## Repository Structure
+
+```
+Google_Maps_Geocoder/
+├── google_maps_geocoder/  # Main package containing the module
+│   ├── __init__.py        # Initializes the package
+│   ├── geocoder.py        # Core implementation
+├── tests/                 # Unit and integration tests
+│   ├── __init__.py        # Test package initialization
+│   ├── test_geocoder.py   # Test cases for the geocoder
+├── examples/              # Example scripts demonstrating module usage
+│   ├── example_usage.py   # Usage example
+├── docs/                  # Documentation files
+│   ├── README.md          # User guide
+│   ├── API_REFERENCE.md   # API details
+├── .gitignore             # Files and directories to ignore in Git
+├── LICENSE                # Repository license
+├── README.md              # Project overview
+├── setup.py               # Script for packaging and installation
+├── requirements.txt       # List of dependencies
+└── pyproject.toml         # Build system configuration (optional)
+```
 
 ## Installation
 
-Clone the repository and install the required dependencies:
+Clone this repository and install the dependencies:
 
 ```bash
-git clone https://github.com/<username>/Google_Maps_Geocoder.git
-cd Google_Maps_Geocoder
-pip install -r requirements.txt
+$ git clone https://github.com/yourusername/Google_Maps_Geocoder.git
+$ cd Google_Maps_Geocoder
+$ pip install -r requirements.txt
 ```
 
 ## Usage
 
-Here is a quick example of how to use the `GoogleGeocoder` class:
+### Initialization
+
+To use the Google Maps Geocoder module, import it and initialize it with your API key:
+
+```python
+from google_geocoder import GoogleGeocoder
+
+API_KEY = "your_api_key_here"
+geocoder = GoogleGeocoder(api_key=API_KEY)
+```
+
+### Cleaning Data
+
+Use the `cleanup_pd` method to clean and preprocess your dataset:
 
 ```python
 import pandas as pd
-from google_geocoder import GoogleGeocoder
 
-# Initialize the geocoder
-api_key = "YOUR_GOOGLE_API_KEY"
-geocoder = GoogleGeocoder(api_key)
-
-# Load your dataset
-data = pd.read_csv("example_addresses.csv")
-
-# Clean and prepare the data for geocoding
-data, needs_geocoding = geocoder.cleanup_pd(data)
-
-# Perform geocoding if needed
-if needs_geocoding:
-    geocoded_data = geocoder.geocode_addresses(data, needs_geocoding)
-    print(geocoded_data.head())
-else:
-    print("Data already contains geocoded coordinates.")
+data = pd.read_csv("your_dataset.csv")
+cleaned_data, needs_geocoding = geocoder.cleanup_pd(data)
 ```
 
-## Repository Structure
-```
-Google_Maps_Geocoder/
-|— google_maps_geocoder/          # Source code
-|   |— __init__.py
-|   |— geocoder.py
-|— tests/                        # Test cases
-|   |— __init__.py
-|   |— test_geocoder.py
-|— examples/                     # Example scripts
-|— README.md
-|— LICENSE
-|— setup.py
-```
+### Geocoding Addresses
 
-
-## Requirements
-
-- Python 3.7+
-- `pandas`
-- `requests`
-
-Install dependencies with:
-
-```bash
-pip install -r requirements.txt
-```
-
-## Testing the Connection
-
-Before using the module, test your API key and internet connection:
+Use the `geocode_addresses` method to geocode your cleaned data:
 
 ```python
-from google_geocoder import GoogleGeocoder
-
-api_key = "YOUR_GOOGLE_API_KEY"
-geocoder = GoogleGeocoder(api_key)
-# The connection test runs during initialization.
+if needs_geocoding:
+    geocoded_data = geocoder.geocode_addresses(cleaned_data, needs_geocoding)
 ```
 
-## API Reference
+## Contributing
 
-### `GoogleGeocoder`
-
-#### `__init__(api_key, return_full_results=False)`
-
-- `api_key`: Your Google Maps API key.
-- `return_full_results`: Whether to include the full API response in results (default: `False`).
-
-#### `test_connection()`
-
-Tests the API key and internet connection by geocoding a sample address.
-
-#### `cleanup_pd(destinations)`
-
-Cleans and preprocesses a DataFrame for geocoding.
-
-- `destinations`: Input DataFrame.
-- Returns: Tuple `(cleaned DataFrame, needs_geocoding)`.
-
-#### `get_google_results(address)`
-
-Fetches geocode results from the Google Maps API.
-
-- `address`: String address to geocode.
-- Returns: Dictionary containing geocode results.
-
-#### `geocode_addresses(destinations, destinations_value)`
-
-Geocodes a list of addresses and appends the results to the input DataFrame.
-
-- `destinations`: DataFrame containing location data.
-- `destinations_value`: Boolean indicating if geocoding is needed.
-- Returns: Updated DataFrame with geocode results.
+Contributions are welcome! Feel free to open issues or submit pull requests to improve this project.
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Contributing
-
-Contributions are welcome! Please submit a pull request or open an issue for feedback.
-
-## Contact
-
-For questions or support, reach out via the GitHub repository.
 

@@ -1,149 +1,78 @@
-# Google Maps Geocoder Documentation
+# Google Maps Geocoder
 
-## Overview
-The **Google Maps Geocoder** is a Python module for geocoding addresses using the Google Maps Geocoding API. This package simplifies address cleanup, geocoding, and integration of geospatial data with Google Maps services.
-
----
+Google Maps Geocoder is a Python module for working with the Google Maps Geocoding API. It provides tools for cleaning datasets, geocoding addresses, and appending geocode results to data.
 
 ## Table of Contents
-1. [Installation](#installation)
-2. [Getting Started](#getting-started)
-3. [Usage Examples](#usage-examples)
-4. [Classes and Methods](#classes-and-methods)
-5. [Contributing](#contributing)
-6. [License](#license)
 
----
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Initialization](#initialization)
+  - [Cleaning Data](#cleaning-data)
+  - [Geocoding Addresses](#geocoding-addresses)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Introduction
+
+Google Maps Geocoder is designed to streamline geocoding operations with Google Maps Geocoding API. It is especially useful for processing large datasets of addresses and ensuring geocode results are correctly formatted and appended.
+
+## Features
+
+- Validate API key and test connection to Google Maps API.
+- Clean and preprocess data for geocoding.
+- Geocode addresses and append results to your dataset.
+- Handle API query limits with automatic retry logic.
 
 ## Installation
 
-### Requirements
-- Python 3.7+
-- Dependencies:
-  - `pandas`
-  - `requests`
+Clone this repository and install the dependencies:
 
-### Installation via pip
 ```bash
-pip install google-maps-geocoder
+$ git clone https://github.com/yourusername/Google_Maps_Geocoder.git
+$ cd Google_Maps_Geocoder
+$ pip install -r requirements.txt
 ```
 
----
+## Usage
 
-## Getting Started
+### Initialization
 
-### Importing the Package
+To use the Google Maps Geocoder module, import it and initialize it with your API key:
+
 ```python
-from google_maps_geocoder import GoogleGeocoder
+from google_geocoder import GoogleGeocoder
+
+API_KEY = "your_api_key_here"
+geocoder = GoogleGeocoder(api_key=API_KEY)
 ```
 
-### Initialize the Geocoder
-To use the module, initialize the `GoogleGeocoder` class with your Google Maps API key:
-```python
-geocoder = GoogleGeocoder(api_key="YOUR_API_KEY")
-```
+### Cleaning Data
 
-### Test the Connection
-Before using the geocoder, verify the API key and internet connection:
-```python
-geocoder.test_connection()
-```
+Use the `cleanup_pd` method to clean and preprocess your dataset:
 
----
-
-## Usage Examples
-
-### Geocoding a Single Address
-```python
-result = geocoder.geocode("1600 Amphitheatre Parkway, Mountain View, CA")
-print(result)
-```
-Output:
-```json
-{
-    "formatted_address": "1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
-    "latitude": 37.422309,
-    "longitude": -122.084624,
-    "accuracy": "ROOFTOP",
-    "google_place_id": "ChIJ2eUgeAK6j4ARbn5u_wAGqWA",
-    "type": "street_address",
-    "postcode": "94043"
-}
-```
-
-### Geocoding Multiple Addresses in a DataFrame
 ```python
 import pandas as pd
 
-# Sample DataFrame
-addresses = pd.DataFrame({
-    "Address": [
-        "1600 Amphitheatre Parkway, Mountain View, CA",
-        "1 Infinite Loop, Cupertino, CA"
-    ]
-})
-
-# Clean up and geocode
-geocoded_addresses = geocoder.batch_geocode(addresses, "Address")
-print(geocoded_addresses)
+data = pd.read_csv("your_dataset.csv")
+cleaned_data, needs_geocoding = geocoder.cleanup_pd(data)
 ```
 
----
+### Geocoding Addresses
 
-## Classes and Methods
+Use the `geocode_addresses` method to geocode your cleaned data:
 
-### `GoogleGeocoder`
-The main class for interacting with the Google Maps Geocoding API.
-
-#### Constructor
 ```python
-GoogleGeocoder(api_key: str)
+if needs_geocoding:
+    geocoded_data = geocoder.geocode_addresses(cleaned_data, needs_geocoding)
 ```
-- **Parameters**:
-  - `api_key` (str): Your Google Maps API key.
-
-#### Methods
-
-1. **`geocode`**
-   ```python
-   geocode(address: str, return_full_response: bool = False) -> dict
-   ```
-   - **Description**: Geocode a single address.
-   - **Parameters**:
-     - `address` (str): The address to geocode.
-     - `return_full_response` (bool): Return the full API response if `True`. Default is `False`.
-   - **Returns**: A dictionary with geocoding results.
-
-2. **`batch_geocode`**
-   ```python
-   batch_geocode(df: pd.DataFrame, address_column: str) -> pd.DataFrame
-   ```
-   - **Description**: Geocode multiple addresses from a DataFrame.
-   - **Parameters**:
-     - `df` (pd.DataFrame): A DataFrame containing addresses.
-     - `address_column` (str): The name of the column with addresses.
-   - **Returns**: A DataFrame with geocoded results appended.
-
-3. **`test_connection`**
-   ```python
-   test_connection() -> None
-   ```
-   - **Description**: Tests the API key and internet connectivity.
-   - **Raises**: `ConnectionError` if the test fails.
-
----
 
 ## Contributing
 
-### Reporting Issues
-If you encounter any issues, please [open an issue on GitHub](https://github.com/yourusername/Google_Maps_Geocoder/issues).
-
-### Contributing Code
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Submit a pull request with a detailed explanation of your changes.
-
----
+Contributions are welcome! Feel free to open issues or submit pull requests to improve this project.
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](../LICENSE) file for details.
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
