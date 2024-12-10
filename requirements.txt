@@ -1,3 +1,6 @@
 pandas
 requests
+logging
+time
+re
 pytest  # For testing
