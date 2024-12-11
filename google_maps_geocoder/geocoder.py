@@ -4,6 +4,7 @@ import time
 import re
 import requests
 import logging
+import os
 
 
 logging.basicConfig(
@@ -18,20 +19,24 @@ class GoogleGeocoder:
     A class for interacting with the Google Geocoding API and performing geocoding on datasets.
     """
 
-    def __init__(self, api_key, return_full_results=False):
+    def __init__(self, api_key=None, return_full_results=False):
         """
         Initialize the GoogleGeocoder class.
         
         :param api_key: Google API key for accessing the Geocoding API.
         :param return_full_results: Boolean indicating if the full API response should be returned.
         """
-        self.api_key = api_key
-        self.return_full_results = return_full_results
+        # self.api_key = api_key
+        # self.return_full_results = return_full_results
 
-        #Test the connection upon initialization
+        # #Test the connection upon initialization
         # self.test_connection()
-
-        logging.info("GoogleGeoCoder initialized")
+        # logging.info("GoogleGeoCoder initialized")
+        self.api_key = api_key or os.getenv("GOOGLE_API_KEY")
+        if not self.api_key:
+            raise ValueError("API key must be provided either as a parameter or through the GOOGLE_API_KEY environment variable.")
+        self.return_full_results = return_full_results
+        logging.info("GoogleGeocoder initialized.")
 
     def test_connection(self):
         """
@@ -44,7 +49,7 @@ class GoogleGeocoder:
                 logging.warning("Error testing the Google Geocoder API.")
                 raise ConnectionError("Problem with test results from Google Geocode - check your API key and internet connection.")
             logging.info("Google Geocoder API connection successful!")
-            # print("Google Geocoder API connection successful!")
+            print("Google Geocoder API connection successful!")
         except Exception as e:
             logging.error(f"Connection test failed: {e}")
             raise
@@ -96,6 +101,8 @@ class GoogleGeocoder:
                 }
             
             answer = response['results'][0]
+            logging.info(f"Successfully retrieved results for address: {address}")
+            print(f"Successfully retrieved results for address: {address}")
             return {
                 "formatted_address": answer.get('formatted_address'),
                 "latitude": answer.get('geometry', {}).get('location', {}).get('lat'),
