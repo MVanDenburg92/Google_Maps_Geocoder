@@ -151,3 +151,54 @@
 2024-12-11 12:02:02,294 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
 2024-12-11 12:02:02,479 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=707%20Palm%20Ave,San%20Diego,CA,92101&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 3010
 2024-12-11 12:02:02,480 = INFO - Successfully retrieved results for address: 707 Palm Ave,San Diego,CA,92101
+2024-12-11 13:10:19,376 = INFO - GoogleGeocoder initialized.
+2024-12-11 13:10:19,400 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:19,770 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=123%20Maple%20St,Boston,MA,2110&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 5735
+2024-12-11 13:10:19,771 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:20,019 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=123%20Maple%20St,Boston,MA,2110&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 5735
+2024-12-11 13:10:20,020 = INFO - Successfully retrieved results for address: 123 Maple St,Boston,MA,2110
+2024-12-11 13:10:20,022 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:20,420 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=456%20Oak%20Ave,New%20York,NY,10001&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 3064
+2024-12-11 13:10:20,439 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:20,635 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=456%20Oak%20Ave,New%20York,NY,10001&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 3064
+2024-12-11 13:10:20,637 = INFO - Successfully retrieved results for address: 456 Oak Ave,New York,NY,10001
+2024-12-11 13:10:20,639 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:20,872 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=789%20Pine%20Rd,Chicago,IL,60601&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2996
+2024-12-11 13:10:20,874 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:21,078 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=789%20Pine%20Rd,Chicago,IL,60601&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2996
+2024-12-11 13:10:21,078 = INFO - Successfully retrieved results for address: 789 Pine Rd,Chicago,IL,60601
+2024-12-11 13:10:21,079 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:21,581 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=101%20Birch%20Blvd,San%20Francisco,CA,94105&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2518
+2024-12-11 13:10:21,604 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:21,790 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=101%20Birch%20Blvd,San%20Francisco,CA,94105&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2518
+2024-12-11 13:10:21,791 = INFO - Successfully retrieved results for address: 101 Birch Blvd,San Francisco,CA,94105
+2024-12-11 13:10:21,793 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:22,143 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=202%20Cedar%20Ln,Los%20Angeles,CA,90001&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2561
+2024-12-11 13:10:22,163 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:22,373 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=202%20Cedar%20Ln,Los%20Angeles,CA,90001&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2561
+2024-12-11 13:10:22,374 = INFO - Successfully retrieved results for address: 202 Cedar Ln,Los Angeles,CA,90001
+2024-12-11 13:10:22,376 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:22,638 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=303%20Elm%20St,Seattle,WA,98101&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2911
+2024-12-11 13:10:22,640 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:22,792 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=303%20Elm%20St,Seattle,WA,98101&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2911
+2024-12-11 13:10:22,792 = INFO - Successfully retrieved results for address: 303 Elm St,Seattle,WA,98101
+2024-12-11 13:10:22,793 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:23,062 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=404%20Walnut%20Dr,Denver,CO,80202&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2790
+2024-12-11 13:10:23,065 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:23,279 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=404%20Walnut%20Dr,Denver,CO,80202&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2790
+2024-12-11 13:10:23,280 = INFO - Successfully retrieved results for address: 404 Walnut Dr,Denver,CO,80202
+2024-12-11 13:10:23,282 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:23,555 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=505%20Redwood%20Way,Austin,TX,73301&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 3118
+2024-12-11 13:10:23,557 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:23,745 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=505%20Redwood%20Way,Austin,TX,73301&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 3118
+2024-12-11 13:10:23,746 = INFO - Successfully retrieved results for address: 505 Redwood Way,Austin,TX,73301
+2024-12-11 13:10:23,747 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:23,960 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=606%20Ash%20St,Miami,FL,33101&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2391
+2024-12-11 13:10:23,962 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:24,142 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=606%20Ash%20St,Miami,FL,33101&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 2391
+2024-12-11 13:10:24,143 = INFO - Successfully retrieved results for address: 606 Ash St,Miami,FL,33101
+2024-12-11 13:10:24,144 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:24,450 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=707%20Palm%20Ave,San%20Diego,CA,92101&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 3010
+2024-12-11 13:10:24,452 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 13:10:24,623 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=707%20Palm%20Ave,San%20Diego,CA,92101&key=AIzaSyD1yJXIQeY8oucCAAo0ekWXS-Jp0QjwEUQ HTTP/11" 200 3010
+2024-12-11 13:10:24,624 = INFO - Successfully retrieved results for address: 707 Palm Ave,San Diego,CA,92101
