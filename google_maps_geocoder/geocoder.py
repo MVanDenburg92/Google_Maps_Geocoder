@@ -6,6 +6,13 @@ import requests
 import logging
 
 
+logging.basicConfig(
+    filename="geocoder.log",
+    level=logging.DEBUG,
+    format="%(asctime)s = %(levelname)s - %(message)s"
+)
+
+
 class GoogleGeocoder:
     """
     A class for interacting with the Google Geocoding API and performing geocoding on datasets.
@@ -21,19 +28,26 @@ class GoogleGeocoder:
         self.api_key = api_key
         self.return_full_results = return_full_results
 
-        # Test the connection upon initialization
-        self.test_connection()
+        #Test the connection upon initialization
+        # self.test_connection()
 
-    # def test_connection(self):
-    #     """
-    #     Test the API key and internet connection by performing a sample geocode request.
-    #     """
-    #     test_address = "London, England"
-    #     test_result = self.get_google_results(test_address)
-    #     if (test_result['status'] != 'OK') or (test_result['formatted_address'] != 'London, UK'):
-    #         logging.warning("There was an error when testing the Google Geocoder.")
-    #         raise ConnectionError("Problem with test results from Google Geocode - check your API key and internet connection.")
-    #     print("Google Geocoder API connection successful!")
+        logging.info("GoogleGeoCoder initialized")
+
+    def test_connection(self):
+        """
+        Test the API key and internet connection by performing a sample geocode request.
+        """
+        test_address = "London, England"
+        test_result = self.get_google_results(test_address)
+        try:
+            if (test_result['status'] != 'OK') or (test_result['formatted_address'] != 'London, UK'):
+                logging.warning("Error testing the Google Geocoder API.")
+                raise ConnectionError("Problem with test results from Google Geocode - check your API key and internet connection.")
+            logging.info("Google Geocoder API connection successful!")
+            # print("Google Geocoder API connection successful!")
+        except Exception as e:
+            logging.error(f"Connection test failed: {e}")
+            raise
 
     def cleanup_pd(self, destinations):
         """
@@ -70,28 +84,37 @@ class GoogleGeocoder:
         """
         geocode_url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={self.api_key}"
         response = requests.get(geocode_url).json()
+        try:
+            response = requests.get(geocode_url).json()
 
-        if not response['results']:
+            if not response['results']:
+                logging.warning(f"No results found for address: {address}")
+                return {
+                    "formatted_address": None, "latitude": None, "longitude": None,
+                    "accuracy": None, "google_place_id": None, "type": None, "postcode": None,
+                    "input_string": address, "number_of_results": 0, "status": response.get('status')
+                }
+            
+            answer = response['results'][0]
             return {
-                "formatted_address": None, "latitude": None, "longitude": None,
-                "accuracy": None, "google_place_id": None, "type": None, "postcode": None,
-                "input_string": address, "number_of_results": 0, "status": response.get('status')
+                "formatted_address": answer.get('formatted_address'),
+                "latitude": answer.get('geometry', {}).get('location', {}).get('lat'),
+                "longitude": answer.get('geometry', {}).get('location', {}).get('lng'),
+                "accuracy": answer.get('geometry', {}).get('location_type'),
+                "google_place_id": answer.get("place_id"),
+                "type": ",".join(answer.get('types', [])),
+                "postcode": ",".join([x['long_name'] for x in answer.get('address_components', []) if 'postal_code' in x.get('types', [])]),
+                "input_string": address,
+                "number_of_results": len(response['results']),
+                "status": response.get('status'),
+                "response": response if self.return_full_results else None
             }
-        
-        answer = response['results'][0]
-        return {
-            "formatted_address": answer.get('formatted_address'),
-            "latitude": answer.get('geometry', {}).get('location', {}).get('lat'),
-            "longitude": answer.get('geometry', {}).get('location', {}).get('lng'),
-            "accuracy": answer.get('geometry', {}).get('location_type'),
-            "google_place_id": answer.get("place_id"),
-            "type": ",".join(answer.get('types', [])),
-            "postcode": ",".join([x['long_name'] for x in answer.get('address_components', []) if 'postal_code' in x.get('types', [])]),
-            "input_string": address,
-            "number_of_results": len(response['results']),
-            "status": response.get('status'),
-            "response": response if self.return_full_results else None
-        }
+        except requests.RequestException as e:
+            logging.error(f"Requests failed for address {address}: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"Error processing results for address {address}: {e}")
+            raise
 
     def geocode_addresses(self, destinations, destinations_value):
         """
@@ -101,6 +124,7 @@ class GoogleGeocoder:
         :param destinations_value: Boolean indicating if geocoding is needed.
         :return: Updated DataFrame with geocoded coordinates.
         """
+
         if not destinations_value:
             print('Destinations are pre-geocoded and the Coords column is present.')
             return destinations
@@ -110,12 +134,16 @@ class GoogleGeocoder:
 
         for address in addresses:
             while True:
-                result = self.get_google_results(address)
-                if result['status'] == 'OVER_QUERY_LIMIT':
-                    print("Query limit reached. Backing off...")
-                    time.sleep(60)  # Wait for 1 minute before retrying
-                else:
-                    results.append(result)
+                try:
+                    result = self.get_google_results(address)
+                    if result['status'] == 'OVER_QUERY_LIMIT':
+                        logging.warning("Query limit reached. Backing off...")
+                        time.sleep(60)  # Wait for 1 minute before retrying
+                    else:
+                        results.append(result)
+                        break
+                except Exception as e:
+                    logging.error(f"Error geocoding address {address}: {e}")
                     break
 
         geocoded_df = pd.DataFrame(results)

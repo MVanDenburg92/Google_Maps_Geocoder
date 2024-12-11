@@ -1,0 +1,33 @@
+2024-12-11 11:52:58,249 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 11:52:58,447 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=London,%20England&key=test_api_key HTTP/11" 200 111
+2024-12-11 11:52:58,449 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 11:52:58,600 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=London,%20England&key=test_api_key HTTP/11" 200 111
+2024-12-11 11:52:58,604 = WARNING - No results found for address: London, England
+2024-12-11 11:52:58,605 = WARNING - Error testing the Google Geocoder API.
+2024-12-11 11:52:58,605 = ERROR - Connection test failed: Problem with test results from Google Geocode - check your API key and internet connection.
+2024-12-11 11:52:58,608 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 11:52:58,786 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=London,%20England&key=test_api_key HTTP/11" 200 111
+2024-12-11 11:52:58,787 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 11:52:58,960 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=London,%20England&key=test_api_key HTTP/11" 200 111
+2024-12-11 11:52:58,961 = WARNING - No results found for address: London, England
+2024-12-11 11:52:58,961 = WARNING - Error testing the Google Geocoder API.
+2024-12-11 11:52:58,961 = ERROR - Connection test failed: Problem with test results from Google Geocode - check your API key and internet connection.
+2024-12-11 11:52:58,964 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 11:52:59,116 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=London,%20England&key=test_api_key HTTP/11" 200 111
+2024-12-11 11:52:59,118 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 11:52:59,269 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=London,%20England&key=test_api_key HTTP/11" 200 111
+2024-12-11 11:52:59,270 = WARNING - No results found for address: London, England
+2024-12-11 11:52:59,270 = WARNING - Error testing the Google Geocoder API.
+2024-12-11 11:52:59,270 = ERROR - Connection test failed: Problem with test results from Google Geocode - check your API key and internet connection.
+2024-12-11 11:52:59,271 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 11:52:59,425 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=London,%20England&key=test_api_key HTTP/11" 200 111
+2024-12-11 11:52:59,426 = DEBUG - Starting new HTTPS connection (1): maps.googleapis.com:443
+2024-12-11 11:52:59,586 = DEBUG - https://maps.googleapis.com:443 "GET /maps/api/geocode/json?address=London,%20England&key=test_api_key HTTP/11" 200 111
+2024-12-11 11:52:59,586 = WARNING - No results found for address: London, England
+2024-12-11 11:52:59,586 = WARNING - Error testing the Google Geocoder API.
+2024-12-11 11:52:59,586 = ERROR - Connection test failed: Problem with test results from Google Geocode - check your API key and internet connection.
+2024-12-11 11:55:45,579 = INFO - GoogleGeoCoder initialized
+2024-12-11 11:55:45,583 = INFO - GoogleGeoCoder initialized
+2024-12-11 11:55:45,587 = INFO - GoogleGeoCoder initialized
+2024-12-11 11:55:45,587 = WARNING - No results found for address: Nonexistent Address
+2024-12-11 11:55:45,587 = INFO - GoogleGeoCoder initialized
