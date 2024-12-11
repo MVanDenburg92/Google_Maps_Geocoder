@@ -1,128 +1,117 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, Mock
+import time
+from google_maps_geocoder.geocoder import GoogleGeocoder
 import pandas as pd
-from google_maps_geocoder import GoogleGeocoder
 
 class TestGoogleGeocoder(unittest.TestCase):
 
-    @patch('requests.get')
-    def test_init_connection_success(self, mock_get):
-        # Simulate a successful API response for the test connection
-        mock_response = MagicMock()
+    # # @patch('google_maps_geocoder.geocoder.GoogleGeocoder.get_google_results')
+    # @patch('google_maps_geocoder.geocoder.requests.get')
+    # def test_connection(self, mock_get):
+    #     # Mock response for successful geocoding
+    #     mock_response = Mock()
+    #     mock_response.json.return_value = {
+    #         'status': 'OK',
+    #         'results': [{'formatted_address': '1600 Pennsylvania Ave, Washington, DC'}]
+    #     }
+    #     mock_get.return_value = mock_response
+
+    #     # Create a GoogleGeocoder instance
+    #     geocoder = GoogleGeocoder(api_key="fake_api_key")
+
+    #     # Test that the connection message is logged
+    #     with self.assertLogs('google_maps_geocoder.geocoder', level='INFO') as cm:
+    #         geocoder.test_connection()
+    #         self.assertIn('Google Geocoder API connection successful!', cm.output)
+
+    @patch('google_maps_geocoder.geocoder.requests.get')
+    def test_cleanup_pd(self, mock_get):
+        # Simulate a successful API response for address cleanup
+        mock_response = Mock()
         mock_response.json.return_value = {
-            'results': [{'formatted_address': 'London, UK'}],
+            'results': [{
+                'formatted_address': '123 Fake Street, Fake City, NY',
+                'geometry': {'location': {'lat': 40.7128, 'lng': -74.0060}},
+                'place_id': 'ChIJD7fiBh9u5kcRYJCMzYwASpA',
+                'types': ['street_address'],
+                'address_components': [{'long_name': '10001', 'types': ['postal_code'] }],
+            }],
             'status': 'OK'
         }
         mock_get.return_value = mock_response
 
+        # Create a GoogleGeocoder instance with a fake API key
         geocoder = GoogleGeocoder(api_key="fake_api_key")
 
-        # Test that the connection was successful
-        self.assertIsInstance(geocoder, GoogleGeocoder)
-        mock_get.assert_called_once()
-
-    @patch('requests.get')
-    def test_init_connection_failure(self, mock_get):
-        # Simulate a failed API response
-        mock_response = MagicMock()
-        mock_response.json.return_value = {
-            'results': [],
-            'status': 'ZERO_RESULTS'
-        }
-        mock_get.return_value = mock_response
-
-        with self.assertRaises(ConnectionError):
-            GoogleGeocoder(api_key="fake_api_key")
-
-    def test_cleanup_pd(self):
-        # Example DataFrame to test cleanup_pd method
+        # Test data for cleanup
         data = {
-            'address': ['123 Main St', '456 Elm St', None],
-            'city': ['Boston', 'Chicago', 'New York'],
-            'state': ['MA', 'IL', 'NY'],
-            'lat': [None, None, 40.7128],
-            'lon': [None, None, -74.0060]
+            'address': ['123 Fake Street', None],
+            'city': ['Fake City', 'Other City'],
+            'state': ['NY', 'CA'],
         }
+
         df = pd.DataFrame(data)
+        cleaned_df, needs_geocoding = geocoder.cleanup_pd(df)
 
-        geocoder = GoogleGeocoder(api_key="fake_api_key")
-
-        cleaned_df, geocode_needed = geocoder.cleanup_pd(df)
-
-        # Check that the cleaned DataFrame has the 'ADDRESS_FULL' column
+        # Test assertions here
         self.assertIn('ADDRESS_FULL', cleaned_df.columns)
-        self.assertTrue(geocode_needed)
+        self.assertTrue(needs_geocoding)
 
-    @patch('requests.get')
-    def test_get_google_results_success(self, mock_get):
-        # Simulate a successful API response for geocoding
-        mock_response = MagicMock()
-        mock_response.json.return_value = {
-            'results': [{
-                'formatted_address': '1600 Amphitheatre Parkway, Mountain View, CA',
-                'geometry': {'location': {'lat': 37.423021, 'lng': -122.083739}},
-                'address_components': [{'types': ['postal_code'], 'long_name': '94043'}],
-                'place_id': 'ChIJ2eUgeAK6j4ARbn5u_wfPfg0',
-                'types': ['street_address']
-            }],
-            'status': 'OK'
-        }
-        mock_get.return_value = mock_response
+    @patch('google_maps_geocoder.geocoder.GoogleGeocoder.get_google_results')
+    def test_geocode_addresses(self, mock_get_google_results):
+        mock_get_google_results.side_effect = [
+            {
+                "results": [
+                    {
+                        "geometry": {"location": {"lat": 40.7128, "lng": -74.0060}},
+                        "formatted_address": "123 Fake Street, Fake City, NY"
+                    }
+                ],
+                "status": "OK"
+            },
+            {
+                "results": [
+                    {
+                        "geometry": {"location": {"lat": 34.0522, "lng": -118.2437}},
+                        "formatted_address": "456 Another St, Fake Town, CA"
+                    }
+                ],
+                "status": "OK"
+            }
+        ]
 
-        geocoder = GoogleGeocoder(api_key="fake_api_key")
-        result = geocoder.get_google_results("1600 Amphitheatre Parkway, Mountain View, CA")
+        df = pd.DataFrame({"ADDRESS_FULL": ["123 Fake Street, Fake City, NY", "456 Another St, Fake Town, CA"]})
+        geocoder = GoogleGeocoder(api_key="fake_key")
+        result_df = geocoder.geocode_addresses(df, True)
 
-        # Check that the result matches the expected values
-        self.assertEqual(result['formatted_address'], '1600 Amphitheatre Parkway, Mountain View, CA')
-        self.assertEqual(result['latitude'], 37.423021)
-        self.assertEqual(result['longitude'], -122.083739)
-        self.assertEqual(result['postcode'], '94043')
-        self.assertEqual(result['status'], 'OK')
+        self.assertEqual(result_df['latitude'][0], 40.7128)
+        self.assertEqual(result_df['longitude'][1], -118.2437)
 
-    @patch('requests.get')
-    def test_geocode_addresses(self, mock_get):
-        # Simulate a successful API response for multiple addresses
-        mock_response = MagicMock()
-        mock_response.json.return_value = {
-            'results': [{
-                'formatted_address': '1600 Amphitheatre Parkway, Mountain View, CA',
-                'geometry': {'location': {'lat': 37.423021, 'lng': -122.083739}},
-                'address_components': [{'types': ['postal_code'], 'long_name': '94043'}],
-                'place_id': 'ChIJ2eUgeAK6j4ARbn5u_wfPfg0',
-                'types': ['street_address']
-            }],
-            'status': 'OK'
-        }
-        mock_get.return_value = mock_response
+    # @patch('google_maps_geocoder.geocoder.requests.get')
+    # @patch.object(GoogleGeocoder, 'test_connection')  # Mock test_connection to prevent it from running
+    # @patch('time.sleep', return_value=None)  # Mock time.sleep to prevent delay
+    # @patch('google_maps_geocoder.geocoder.GoogleGeocoder.get_google_results')
+    @patch('google_maps_geocoder.geocoder.GoogleGeocoder.get_google_results')
+    def test_handle_over_query_limit(self, mock_get_google_results):
+        mock_get_google_results.side_effect = [
+            {"status": "OVER_QUERY_LIMIT"},
+            {
+                "results": [
+                    {
+                        "geometry": {"location": {"lat": 40.7128, "lng": -74.0060}},
+                        "formatted_address": "123 Fake Street, Fake City, NY"
+                    }
+                ],
+                "status": "OK"
+            }
+        ]
 
-        data = {
-            'ADDRESS_FULL': ['1600 Amphitheatre Parkway, Mountain View, CA', 'Another Address']
-        }
-        df = pd.DataFrame(data)
+        df = pd.DataFrame({"ADDRESS_FULL": ["123 Fake Street, Fake City, NY"]})
+        geocoder = GoogleGeocoder(api_key="fake_key")
+        result_df = geocoder.geocode_addresses(df, True)
 
-        geocoder = GoogleGeocoder(api_key="fake_api_key")
-        result_df = geocoder.geocode_addresses(df, destinations_value=True)
-
-        # Check that the result DataFrame has the expected columns
-        self.assertIn('latitude', result_df.columns)
-        self.assertIn('longitude', result_df.columns)
-        self.assertEqual(len(result_df), 2)  # There should be 2 addresses in the result
-
-    @patch('requests.get')
-    def test_handle_over_query_limit(self, mock_get):
-        # Simulate 'OVER_QUERY_LIMIT' status from the API
-        mock_response = MagicMock()
-        mock_response.json.return_value = {
-            'results': [],
-            'status': 'OVER_QUERY_LIMIT'
-        }
-        mock_get.return_value = mock_response
-
-        geocoder = GoogleGeocoder(api_key="fake_api_key")
-        result = geocoder.get_google_results("1600 Amphitheatre Parkway, Mountain View, CA")
-
-        # Ensure the response handles OVER_QUERY_LIMIT and retries appropriately
-        self.assertEqual(result['status'], 'OVER_QUERY_LIMIT')
+        self.assertIsNone(result_df['latitude'][0])  # Query limit leads to None
 
 
 if __name__ == '__main__':

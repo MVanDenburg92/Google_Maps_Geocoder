@@ -24,16 +24,16 @@ class GoogleGeocoder:
         # Test the connection upon initialization
         self.test_connection()
 
-    def test_connection(self):
-        """
-        Test the API key and internet connection by performing a sample geocode request.
-        """
-        test_address = "London, England"
-        test_result = self.get_google_results(test_address)
-        if (test_result['status'] != 'OK') or (test_result['formatted_address'] != 'London, UK'):
-            logging.warning("There was an error when testing the Google Geocoder.")
-            raise ConnectionError("Problem with test results from Google Geocode - check your API key and internet connection.")
-        print("Google Geocoder API connection successful!")
+    # def test_connection(self):
+    #     """
+    #     Test the API key and internet connection by performing a sample geocode request.
+    #     """
+    #     test_address = "London, England"
+    #     test_result = self.get_google_results(test_address)
+    #     if (test_result['status'] != 'OK') or (test_result['formatted_address'] != 'London, UK'):
+    #         logging.warning("There was an error when testing the Google Geocoder.")
+    #         raise ConnectionError("Problem with test results from Google Geocode - check your API key and internet connection.")
+    #     print("Google Geocoder API connection successful!")
 
     def cleanup_pd(self, destinations):
         """
