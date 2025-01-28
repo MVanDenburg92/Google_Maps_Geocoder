@@ -103,7 +103,7 @@ class GoogleGeocoder:
             answer = response['results'][0]
             logging.info(f"Successfully retrieved results for address: {address}")
             print(f"Successfully retrieved results for address: {address}")
-            return {
+            return  {
                 "formatted_address": answer.get('formatted_address'),
                 "latitude": answer.get('geometry', {}).get('location', {}).get('lat'),
                 "longitude": answer.get('geometry', {}).get('location', {}).get('lng'),
@@ -122,7 +122,51 @@ class GoogleGeocoder:
         except Exception as e:
             logging.error(f"Error processing results for address {address}: {e}")
             raise
+    
+    def geocode_single(self, address):
+        """
+        Fetch geocode results for a single address from the Google Maps Geocoding API.
+        
+        :param address: Address string to geocode.
+        :return: Single entry dataframe containing the results of the call. 
+        """
+        geocode_url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={self.api_key}"
+        response = requests.get(geocode_url).json()
+        try:
+            response = requests.get(geocode_url).json()
 
+            if not response['results']:
+                logging.warning(f"No results found for address: {address}")
+                return {
+                    "formatted_address": None, "latitude": None, "longitude": None,
+                    "accuracy": None, "google_place_id": None, "type": None, "postcode": None,
+                    "input_string": address, "number_of_results": 0, "status": response.get('status')
+                }
+            
+            answer = response['results'][0]
+            logging.info(f"Successfully retrieved results for address: {address}")
+            print(f"Successfully retrieved results for address: {address}")
+            rez =  {
+                "formatted_address": answer.get('formatted_address'),
+                "latitude": answer.get('geometry', {}).get('location', {}).get('lat'),
+                "longitude": answer.get('geometry', {}).get('location', {}).get('lng'),
+                "accuracy": answer.get('geometry', {}).get('location_type'),
+                "google_place_id": answer.get("place_id"),
+                "type": ",".join(answer.get('types', [])),
+                "postcode": ",".join([x['long_name'] for x in answer.get('address_components', []) if 'postal_code' in x.get('types', [])]),
+                "input_string": address,
+                "number_of_results": len(response['results']),
+                "status": response.get('status'),
+                "response": response if self.return_full_results else None
+            }
+            return pd.json_normalize(rez)
+        except requests.RequestException as e:
+            logging.error(f"Requests failed for address {address}: {e}")
+            raise
+        except Exception as e:
+            logging.error(f"Error processing results for address {address}: {e}")
+            raise
+    
     def geocode_addresses(self, destinations, destinations_value):
         """
         Geocodes a list of addresses and appends results to the DataFrame.

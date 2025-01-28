@@ -1,4 +1,4 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.2
 Name: google-maps-geocoder
 Version: 0.1.0
 Summary: A Python module for geocoding addresses using the Google Maps Geocoding API
@@ -7,3 +7,7 @@ Requires-Python: >=3.7
 License-File: LICENSE
 Requires-Dist: pandas
 Requires-Dist: requests
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
