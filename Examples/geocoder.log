@@ -3021,3 +3021,25 @@
 2025-03-28 14:19:07,000 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=606+Ash+St%2CMiami%2CFL%2C33101&client=gme-cushmanwakefield&channel=GBC&signature=2GoeiblIdkEpvF4KeFx12OSvz7Q= HTTP/11" 200 2391
 2025-03-28 14:19:07,002 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
 2025-03-28 14:19:07,202 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=707+Palm+Ave%2CSan+Diego%2CCA%2C92101&client=gme-cushmanwakefield&channel=GBC&signature=V2dFM-PIcpLFAGWPxMZTAMyZArc= HTTP/11" 200 3274
+2025-03-28 17:50:35,801 = INFO - GoogleGeocoder initialized.
+2025-03-28 17:50:35,801 = INFO - GoogleGeocoder initialized.
+2025-03-28 17:50:36,925 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:37,227 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=123+Maple+St%2CBoston%2CMA%2C2110&client=gme-cushmanwakefield&channel=GBC&signature=bPVXNSAuEzmhP07R_mw01iekGMM= HTTP/11" 200 6224
+2025-03-28 17:50:37,244 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:37,440 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=456+Oak+Ave%2CNew+York%2CNY%2C10001&client=gme-cushmanwakefield&channel=GBC&signature=AWH_1LyYKbZpuT--jcWiPlvpzJs= HTTP/11" 200 3296
+2025-03-28 17:50:37,444 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:37,675 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=789+Pine+Rd%2CChicago%2CIL%2C60601&client=gme-cushmanwakefield&channel=GBC&signature=UgL6mJQHFXcvSmiVrMgYP0sHlEg= HTTP/11" 200 2996
+2025-03-28 17:50:37,681 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:38,067 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=101+Birch+Blvd%2CSan+Francisco%2CCA%2C94105&client=gme-cushmanwakefield&channel=GBC&signature=mvQu4MlU7EPBZcMvGsPLSHndMbU= HTTP/11" 200 5357
+2025-03-28 17:50:38,092 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:38,346 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=202+Cedar+Ln%2CLos+Angeles%2CCA%2C90001&client=gme-cushmanwakefield&channel=GBC&signature=axarMig_puKgB6BHhLAvvey_2VU= HTTP/11" 200 5426
+2025-03-28 17:50:38,376 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:38,556 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=303+Elm+St%2CSeattle%2CWA%2C98101&client=gme-cushmanwakefield&channel=GBC&signature=_cfcWHmbXmAADPs4iIRoSSXL1TA= HTTP/11" 200 3563
+2025-03-28 17:50:38,590 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:38,841 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=404+Walnut+Dr%2CDenver%2CCO%2C80202&client=gme-cushmanwakefield&channel=GBC&signature=jNqMKCf8P_xIA_SBIvVbggwm-Cg= HTTP/11" 200 2789
+2025-03-28 17:50:38,844 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:39,096 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=505+Redwood+Way%2CAustin%2CTX%2C73301&client=gme-cushmanwakefield&channel=GBC&signature=z8roZSPWURn6iXs5vLba2e7Lu7A= HTTP/11" 200 3358
+2025-03-28 17:50:39,099 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:39,319 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=606+Ash+St%2CMiami%2CFL%2C33101&client=gme-cushmanwakefield&channel=GBC&signature=2GoeiblIdkEpvF4KeFx12OSvz7Q= HTTP/11" 200 2391
+2025-03-28 17:50:39,320 = DEBUG - Starting new HTTP connection (1): maps.googleapis.com:80
+2025-03-28 17:50:39,542 = DEBUG - http://maps.googleapis.com:80 "GET /maps/api/geocode/json?address=707+Palm+Ave%2CSan+Diego%2CCA%2C92101&client=gme-cushmanwakefield&channel=GBC&signature=V2dFM-PIcpLFAGWPxMZTAMyZArc= HTTP/11" 200 3274
