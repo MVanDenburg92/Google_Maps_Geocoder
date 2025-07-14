@@ -3,3 +3,11 @@ __pycache__/
 .env
 *.csv
 *.bak
+*.log
+*.log.*
+logs/
+geocoder.log
+**/*.log
+# Temporary files
+*_temp.csv
+*.tmp
