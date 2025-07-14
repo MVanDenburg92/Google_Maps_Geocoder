@@ -1,0 +1,2 @@
+[console_scripts]
+geocode = google_maps_geocoder.cli:main

@@ -11,9 +11,9 @@ from google_maps_geocoder import GoogleGeocoder
 
 geocoder = GoogleGeocoder()
 
-def load_data(file_path, geocoder):
-    data = pd.read_csv(file_path)
-    
+def load_data(file_path, geocoder,nrows = None):
+    data = pd.read_csv(file_path,nrows=nrows)
+    print(data.describe)
     print("Original columns:", data.columns)
     
     data, needs_geocoding = geocoder.cleanup_pd(data)
@@ -149,18 +149,33 @@ def fetch_google_results(signed_urls_df):
     results_dest = process_in_batches(urls, batch_size=100, max_workers=10)
     return pd.DataFrame(results_dest)
 
+def get_directory_path(full_path):
+  """
+  Extracts the directory path from a full file path.
 
-def signed_url_geocode(input_file, output_file, private_key, base_url, client, channel, geocode_only = False,dir = 'results'):
+  Args:
+    full_path: The full path to the file.
+
+  Returns:
+    The directory path of the file.
+  """
+  return os.path.dirname(full_path)
+
+def signed_url_geocode(input_file, output_file, private_key, base_url, client, channel, geocode_only = False,dir = 'results',limit=None):
     """
     Main function to run the Google Maps API Signing and data retrieval script.
     """
     # Create results directory if it doesn't exist
     cleaned_data_name = 'site_numbered_cleaned_data.csv'
+    directory_path = get_directory_path(input_file)
+    print(directory_path)
     if geocode_only == False:
-        os.makedirs(dir, exist_ok=True)
-        
+        # directory_path
+        # os.makedirs(dir, exist_ok=True)
+        file_path_full = os.path.join(directory_path, dir)
+        os.makedirs(file_path_full, exist_ok=True)
         geocoder = GoogleGeocoder()
-        data = load_data(input_file, geocoder)
+        data = load_data(input_file, geocoder,nrows=limit)
         print(f"Loaded {len(data)} records from {input_file}")
         
         # Add Site_Number to the original data
@@ -170,7 +185,7 @@ def signed_url_geocode(input_file, output_file, private_key, base_url, client, c
         
         # Generate signed URLs
         signed_urls_df = generate_signed_urls(data, private_key, base_url, client, channel)
-        file_path_signed_csv = os.path.join(dir, 'signed_urls.csv')
+        file_path_signed_csv = os.path.join(file_path_full, 'signed_urls.csv')
         signed_urls_df.to_csv(file_path_signed_csv, index=False)
         print("Signed URLs have been saved to signed_urls.csv")
         
@@ -179,21 +194,28 @@ def signed_url_geocode(input_file, output_file, private_key, base_url, client, c
         
         # Add Site_Number to the Google results dataframe
         google_results_df['Site_Number'] = range(1, len(google_results_df) + 1)
-        google_results_df.to_csv(os.path.join(dir, 'google_results_df_0425.csv'))
+        google_results_df.to_csv(os.path.join(dir, 'google_results_df.csv'))
     else:
-        os.makedirs(dir, exist_ok=True)
-        file_path_signed_csv = os.path.join(dir, cleaned_data_name)
+        file_path_full = os.path.join(directory_path, dir)
+        os.makedirs(file_path_full, exist_ok=True)
+        file_path_signed_csv = os.path.join(file_path_full, cleaned_data_name)
         data = pd.read_csv(file_path_signed_csv)
-        file_path_signed_csv = os.path.join(dir, 'signed_urls.csv')
+        file_path_signed_csv = os.path.join(file_path_full, 'signed_urls.csv')
         signed_urls_df = pd.read_csv(file_path_signed_csv)
         print("Signed URLs have been read from {}".format(file_path_signed_csv))
+        # os.makedirs(dir, exist_ok=True)
+        # file_path_signed_csv = os.path.join(dir, cleaned_data_name)
+        # data = pd.read_csv(file_path_signed_csv)
+        # file_path_signed_csv = os.path.join(dir, 'signed_urls.csv')
+        # signed_urls_df = pd.read_csv(file_path_signed_csv)
+        # print("Signed URLs have been read from {}".format(file_path_signed_csv))
         
         # Fetch Google results using improved parallel processing
         google_results_df = fetch_google_results(signed_urls_df)
         
         # Add Site_Number to the Google results dataframe
         google_results_df['Site_Number'] = range(1, len(google_results_df) + 1)
-        google_results_df.to_csv(os.path.join(dir, 'google_results_df_0425.csv'))
+        google_results_df.to_csv(os.path.join(file_path_signed_csv, 'google_results_df_0425.csv'))
 
     
     try:
@@ -213,9 +235,9 @@ def signed_url_geocode(input_file, output_file, private_key, base_url, client, c
             print(f"Successfully joined {len(google_results_df_combo)} records")
         
         # Save the combined dataframe to CSV
-        file_path_csv = os.path.join(dir, output_file)
-        google_results_df_combo.to_csv(file_path_csv, index=False)
-        print(f"Combined data saved to {file_path_csv}")
+        file_path_csv_2 = os.path.join(file_path_full, output_file)
+        google_results_df_combo.to_csv(file_path_csv_2, index=False)
+        print(f"Combined data saved to {file_path_csv_2}")
         
     except Exception as e:
         print(f"Error joining datasets: {str(e)}")

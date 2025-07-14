@@ -70,7 +70,7 @@ class GoogleGeocoder:
                 destinations['Coords'] = list(zip(destinations['Latitude'], destinations['Longitude']))
                 if any(x[0] is None for x in destinations['Coords']):
                     destinations.drop(columns=['Latitude', 'Longitude', 'Coords'], inplace=True)
-                    filter_df_dest = destinations.filter(regex=re.compile(r"address.*|city$|town$|state$|zip code.*|zipcode.*|zip*|Postal*|prov*", re.IGNORECASE))
+                    filter_df_dest = destinations.filter(regex=re.compile(r"Street Address|address.*|city$|Street City|town$|state$|Street Zip|zip code.*|zipcode.*|zip*|Postal*|prov*", re.IGNORECASE))
                     destinations['ADDRESS_FULL'] = filter_df_dest.apply(lambda y: ','.join(y.dropna().astype(str)), axis=1)
         except Exception as e:
             print(f'Error cleaning destinations dataset: {e}')
