@@ -63,7 +63,7 @@ class Config:
         if not self.google_client_id:
             self.google_client_id = os.getenv('GOOGLE_CLIENT_ID')
         if not self.google_private_key:
-            self.google_private_key = os.getenv('GOOGLE_PRIVATE_KEY')
+            self.google_private_key = os.getenv('GOOGLE_MAPS_PRIVATE_KEY')
     
     @classmethod
     def from_env(cls) -> 'Config':
