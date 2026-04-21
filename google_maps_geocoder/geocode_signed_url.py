@@ -17,7 +17,7 @@ def load_data(file_path, geocoder,nrows = None):
     print("Original columns:", data.columns)
     
     data, needs_geocoding = geocoder.cleanup_pd(data)
-    
+    print("TEST")
     print("Post-cleanup columns:", data.columns)
     
     if 'ADDRESS_FULL' not in data.columns:

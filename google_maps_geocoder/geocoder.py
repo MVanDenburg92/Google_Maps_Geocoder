@@ -63,6 +63,16 @@ class GoogleGeocoder:
         """
         try:
             destinations = destinations.dropna(how='all')
+
+            # Identify zip code columns and convert them to string before any processing
+            zip_cols = destinations.filter(regex=re.compile(
+                r"Street Zip|zip code.*|zipcode.*|zip.*|Postal.*", re.IGNORECASE
+            )).columns
+            for col in zip_cols:
+                destinations[col] = destinations[col].apply(
+                    lambda x: str(int(float(x))).zfill(5) if pd.notna(x) and str(x).replace('.', '', 1).isdigit() else x
+                )
+            print("CODE UPDATED")
             filter_df_dest = destinations.filter(regex=re.compile(r"^lat.*|^Y$|^geo.*lat|^lon.*|^X$|^geo.*lon", re.IGNORECASE))
             dest_col_names = list(filter_df_dest.columns)
             if len(dest_col_names) > 0:
@@ -74,7 +84,6 @@ class GoogleGeocoder:
                     destinations['ADDRESS_FULL'] = filter_df_dest.apply(lambda y: ','.join(y.dropna().astype(str)), axis=1)
         except Exception as e:
             print(f'Error cleaning destinations dataset: {e}')
-
         if 'Coords' not in destinations.columns:
             filter_df_dest = destinations.filter(regex=re.compile(r"address.*|city$|town$|state$|zip code.*|zipcode.*|zip*|Postal*|prov*", re.IGNORECASE))
             destinations['ADDRESS_FULL'] = filter_df_dest.apply(lambda y: ','.join(y.dropna().astype(str)), axis=1)

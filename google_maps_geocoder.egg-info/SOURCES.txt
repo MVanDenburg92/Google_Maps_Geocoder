@@ -6,9 +6,12 @@ google_maps_geocoder/__init__.py
 google_maps_geocoder/address_validator.py
 google_maps_geocoder/cli.py
 google_maps_geocoder/config.py
+google_maps_geocoder/example_reverse_geocode.py
 google_maps_geocoder/exceptions.py
 google_maps_geocoder/geocode_signed_url.py
+google_maps_geocoder/geocode_signed_url_enhanced.py
 google_maps_geocoder/geocoder.py
+google_maps_geocoder/test_reverse_geocode.py
 google_maps_geocoder/utils.py
 google_maps_geocoder.egg-info/PKG-INFO
 google_maps_geocoder.egg-info/SOURCES.txt
